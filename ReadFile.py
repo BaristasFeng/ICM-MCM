@@ -7,6 +7,7 @@ from My_Hero.Description_State import DescriptionState
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
+from My_Hero.ClassTypes import ClassTypes
 
 
 def normalize(train, test):
@@ -117,6 +118,54 @@ CA_MSN = MSN_Description(CA)
 NM_MSN = MSN_Description(NM)
 TX_MSN = MSN_Description(TX)
 
+#pow if State
+
+Renewable_Energy_list = ["AR","BM","EL","EM","EN","ES","GO","HY","JF","JK","JN","LU","NU","RE","SO","WD","WY"]
+Non_renewable_energy_list = ["AB","AV","CL","CO","DF","DK","FF","FN","FO","FS","KS","LG","MB","MG","NG","MM","MS","NA","PP","RF","SF","US","WX"]
+clean_energy_list = ["AR","BM","EL","EM","EN","ES","GO","HY","JF","JK","JN","LU","NG","NU","PP","SO","WY"]
+Non_clean_energy_list = ["AB","AV","CL","CO","DF","DK","FF","FN","FO","FS","KS","LG","MB","MG","MM","MS","NA","RF","SF","WD","US","WX"]
+
+Renewable_Energy = []
+Non_renewable_energy = []
+clean_energy = []
+Non_clean_energy = []
+
+for i in AZ:
+    if i.MSN[0:2] in Renewable_Energy_list:
+        Renewable_Energy.append(i)
+    if i.MSN[0:2] in Non_renewable_energy_list:
+        Non_renewable_energy_list.append(i)
+    if i.MSN[0:2] in clean_energy_list:
+        clean_energy_list.append(i)
+    if i.MSN[0:2] in Non_clean_energy_list:
+        Non_clean_energy_list.append(i)
+Renewable_Energy.sort(key=DescriptionState.Year)
+
+print_Renewable_Energy = []
+
+for i in range(1960,2010):
+    print_Renewable_Energy.append(ClassTypes(i,0))
+
+for i in range(print_Renewable_Energy.__len__()):
+    for j in range(Renewable_Energy.__len__()):
+        if Renewable_Energy[j].Year == print_Renewable_Energy[i].Year:
+            print_Renewable_Energy[i].Count+=Renewable_Energy[j].Data
+        #else:break
+
+
+
+
+print_Year=[]
+print_Count=[]
+for i in print_Renewable_Energy:
+    #print(i.Year,i.Count)
+    print_Year.append(i.Year)
+    print_Count.append(i.Count)
+
+plt.plot(print_Year,print_Count,"r")
+plt.show()
+
+
 #printMSN(TX_MSN)
 #print(len(AZ_MSN))
 #print(len(CA_MSN))
@@ -167,8 +216,8 @@ for j in TX_MSN:
 #plt.plot(TX_year,TX_data,'r')
 #plt.plot(CA_year,CA_data,'y')
 #plt.plot(AZ_year,AZ_data,'g')
-plt.plot(NM_year,NM_data,'b')
-plt.show()
+#plt.plot(NM_year,NM_data,'b')
+#plt.show()
 
 T_year = np.array(NM_year).astype(np.float32)
 T_data = np.array(NM_data).astype(np.float32)
@@ -186,8 +235,8 @@ y = X_train*W+b
 y_=tf.placeholder(np.float32,[None,1])
 #cost=tf.reduce_sum(tf.pow((y_-y),2))
 #X_train = tf.nn.lrn(input=X_train,depth_radius=2,bias=0,alpha=1,beta=1)
-loss = tf.reduce_mean(Y_train-y )
-train_step=tf.train.GradientDescentOptimizer(0.5).minimize(loss)
+loss = tf.reduce_mean(abs(Y_train-y))
+train_step=tf.train.GradientDescentOptimizer(0.327).minimize(loss)
 init=tf.global_variables_initializer()
 sess=tf.Session()
 sess.run(init)
@@ -202,11 +251,11 @@ for i in range(100):
     #存储每次训练的cost值
     cost_history.append(sess.run(W))
     #输出每次训练后的W,b和cost值
-    print("After %d iteration:" %i)
-    print("W: %f" % sess.run(W))
-    print("b: %f" % sess.run(b))
+   # print("After %d iteration:" %i)
+    #print("W: %f" % sess.run(W))
+    #print("b: %f" % sess.run(b))
     #print("cost: %f" % sess.run(cost,feed_dict=feed)) #输出最终的W,b和cost值
-print("W_Value: %f" % sess.run(W),"b_Value: %f" % sess.run(b),"cost_Value: %f" )#% sess.run(cost,feed_dict=feed))
+#print("W_Value: %f" % sess.run(W),"b_Value: %f" % sess.run(b),"cost_Value: %f" )#% sess.run(cost,feed_dict=feed))
 
 
 
