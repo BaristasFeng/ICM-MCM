@@ -186,7 +186,7 @@ y = X_train*W+b
 y_=tf.placeholder(np.float32,[None,1])
 #cost=tf.reduce_sum(tf.pow((y_-y),2))
 #X_train = tf.nn.lrn(input=X_train,depth_radius=2,bias=0,alpha=1,beta=1)
-loss = tf.reduce_mean(tf.square(y - Y_train))
+loss = tf.reduce_mean(Y_train-y )
 train_step=tf.train.GradientDescentOptimizer(0.5).minimize(loss)
 init=tf.global_variables_initializer()
 sess=tf.Session()
