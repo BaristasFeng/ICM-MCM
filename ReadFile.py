@@ -4,7 +4,8 @@
 import xlrd as xlrd
 #open the file
 from My_Hero.Description_State import DescriptionState
-
+import matplotlib.pyplot as plt
+import numpy as np
 
 def printMSN(MSN_LIST):
     file_object = open('C:\\Users\\lenovo\\Desktop\\data_class_AZ.txt', 'w')
@@ -100,6 +101,51 @@ printMSN(TX_MSN)
 #print(len(TX_MSN))
 
 
+strs="WYTCB"
+
+AZ_year = []
+AZ_data=[]
+
+for j in AZ_MSN:
+    if j[0].MSN == strs:
+        for i in j:
+            AZ_year.append(i.Year)
+            AZ_data.append(i.Data)
+
+CA_year = []
+CA_data=[]
+
+for j in CA_MSN:
+    if j[0].MSN == strs:
+        for i in j:
+            CA_year.append(i.Year)
+            CA_data.append(i.Data)
+NM_year = []
+NM_data=[]
+
+for j in NM_MSN:
+    if j[0].MSN == strs:
+        for i in j:
+            NM_year.append(i.Year)
+            NM_data.append(i.Data)
+TX_year = []
+TX_data=[]
+
+for j in TX_MSN:
+    if j[0].MSN == strs:
+        for i in j:
+            TX_year.append(i.Year)
+            TX_data.append(i.Data)
+
+#for i in year:
+    #print(i)
+#for i in data:
+    #print(i)
+plt.plot(TX_year,TX_data,'r')
+plt.plot(CA_year,CA_data,'y')
+plt.plot(AZ_year,AZ_data,'g')
+plt.plot(NM_year,NM_data,'b')
+plt.show()
 
 
 
