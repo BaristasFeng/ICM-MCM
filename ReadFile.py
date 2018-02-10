@@ -9,6 +9,8 @@ import tensorflow as tf
 import numpy as np
 from My_Hero.ClassTypes import ClassTypes
 
+#def getPrint_img():
+
 
 def normalize(train, test):
     mean, std = train.mean(), test.std()
@@ -130,21 +132,33 @@ Non_renewable_energy = []
 clean_energy = []
 Non_clean_energy = []
 
-for i in AZ:
+for i in TX:
     if i.MSN[0:2] in Renewable_Energy_list:
         Renewable_Energy.append(i)
     if i.MSN[0:2] in Non_renewable_energy_list:
-        Non_renewable_energy_list.append(i)
+        Non_renewable_energy.append(i)
     if i.MSN[0:2] in clean_energy_list:
-        clean_energy_list.append(i)
+        clean_energy.append(i)
     if i.MSN[0:2] in Non_clean_energy_list:
-        Non_clean_energy_list.append(i)
+        Non_clean_energy.append(i)
 Renewable_Energy.sort(key=DescriptionState.Year)
+Non_renewable_energy.sort(key=DescriptionState.Year)
+clean_energy.sort(key=DescriptionState.Year)
+Non_clean_energy.sort(key=DescriptionState.Year)
 
+#for i in  Non_clean_energy
+
+#the four print list
 print_Renewable_Energy = []
+print_Non_renewable_energy = []
+print_clean_energy = []
+print_Non_clean_energy = []
 
 for i in range(1960,2010):
     print_Renewable_Energy.append(ClassTypes(i,0))
+    print_Non_renewable_energy.append(ClassTypes(i,0))
+    print_clean_energy.append(ClassTypes(i,0))
+    print_Non_clean_energy.append(ClassTypes(i,0))
 
 for i in range(print_Renewable_Energy.__len__()):
     for j in range(Renewable_Energy.__len__()):
@@ -152,17 +166,59 @@ for i in range(print_Renewable_Energy.__len__()):
             print_Renewable_Energy[i].Count+=Renewable_Energy[j].Data
         #else:break
 
+for i in range(print_Non_renewable_energy.__len__()):
+    for j in range(Non_renewable_energy.__len__()):
+        if Non_renewable_energy[j].Year == print_Non_renewable_energy[i].Year:
+            print_Non_renewable_energy[i].Count+=Non_renewable_energy[j].Data
 
+for i in range(print_clean_energy.__len__()):
+    for j in range(clean_energy.__len__()):
+        if clean_energy[j].Year == print_clean_energy[i].Year:
+            print_clean_energy[i].Count+=clean_energy[j].Data
 
+for i in range(print_Non_clean_energy.__len__()):
+    for j in range(Non_clean_energy.__len__()):
+        if Non_clean_energy[j].Year == print_Non_clean_energy[i].Year:
+            print_Non_clean_energy[i].Count+=Non_clean_energy[j].Data
 
-print_Year=[]
-print_Count=[]
+print(print_clean_energy.__len__())
+
+Renewable_Energyprint_Year = []
+Renewable_Energyprint_Count = []
 for i in print_Renewable_Energy:
-    #print(i.Year,i.Count)
-    print_Year.append(i.Year)
-    print_Count.append(i.Count)
+    # print(i.Year,i.Count)
+    Renewable_Energyprint_Year.append(i.Year)
+    Renewable_Energyprint_Count.append(i.Count)
 
-plt.plot(print_Year,print_Count,"r")
+Renewable_Energyprint_Year1 = []
+Renewable_Energyprint_Count1 = []
+for i in print_Non_renewable_energy:
+    # print(i.Year,i.Count)
+    Renewable_Energyprint_Year1.append(i.Year)
+    Renewable_Energyprint_Count1.append(i.Count)
+
+
+Renewable_Energyprint_Year2 = []
+Renewable_Energyprint_Count2 = []
+for i in print_clean_energy:
+    # print(i.Year,i.Count)
+    Renewable_Energyprint_Year2.append(i.Year)
+    Renewable_Energyprint_Count2.append(i.Count)
+
+
+Renewable_Energyprint_Year3 = []
+Renewable_Energyprint_Count3 = []
+for i in print_Non_clean_energy:
+    # print(i.Year,i.Count)
+    Renewable_Energyprint_Year3.append(i.Year)
+    Renewable_Energyprint_Count3.append(i.Count)
+
+
+#red:Renewable_Energyprint、yellow：Non_renewable_energy、blue:clean_energy,green:Non_clean_energy
+plt.plot(Renewable_Energyprint_Year,Renewable_Energyprint_Count,"r")
+plt.plot(Renewable_Energyprint_Year1,Renewable_Energyprint_Count1,"y")
+plt.plot(Renewable_Energyprint_Year2,Renewable_Energyprint_Count2,"b")
+plt.plot(Renewable_Energyprint_Year3,Renewable_Energyprint_Count3,"g")
 plt.show()
 
 
